@@ -58,7 +58,7 @@ public class VideoServiceImpl implements VideoService {
     @Override
     public PagedResult getAllVideos(Videos videos, Integer isSaveRecord, Integer page, Integer pageSize) {
 
-        // 保存热搜词
+        // 保存热搜的词语
         String desc = videos.getVideoDesc();
         if (isSaveRecord != null && isSaveRecord == 1) {
             SearchRecords searchRecords = new SearchRecords();
