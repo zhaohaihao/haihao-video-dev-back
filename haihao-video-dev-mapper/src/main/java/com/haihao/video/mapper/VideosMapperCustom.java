@@ -12,7 +12,7 @@ public interface VideosMapperCustom extends MyMapper<Videos> {
 	/**
 	 * @Description: 条件查询所有视频列表
 	 */
-	List<VideosVO> queryAllVideos();
+	List<VideosVO> queryAllVideos(@Param("videoDesc") String videoDesc);
 	
 	/**
 	 * @Description: 查询关注的视频

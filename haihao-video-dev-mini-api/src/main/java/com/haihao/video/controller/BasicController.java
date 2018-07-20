@@ -26,6 +26,9 @@ public class BasicController {
     // ffmpeg所在目录
     public static final String FFMPEG_EXE = "F:\\ffmpeg\\ffmpeg\\bin\\ffmpeg.exe";
 
+    // 页面大小
+    public static final Integer PAGE_SIZE = 5;
+
     /***
      * 生成无状态session
      * @param userModel

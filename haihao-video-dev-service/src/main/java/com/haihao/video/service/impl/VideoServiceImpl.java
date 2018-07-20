@@ -2,8 +2,10 @@ package com.haihao.video.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.haihao.video.mapper.SearchRecordsMapper;
 import com.haihao.video.mapper.VideosMapper;
 import com.haihao.video.mapper.VideosMapperCustom;
+import com.haihao.video.pojo.SearchRecords;
 import com.haihao.video.pojo.Videos;
 import com.haihao.video.pojo.vo.VideosVO;
 import com.haihao.video.service.VideoService;
@@ -29,6 +31,9 @@ public class VideoServiceImpl implements VideoService {
     private VideosMapperCustom videosMapperCustom;
 
     @Autowired
+    private SearchRecordsMapper searchRecordsMapper;
+
+    @Autowired
     private Sid sid;
 
     @Transactional(propagation = Propagation.REQUIRED)
@@ -49,10 +54,21 @@ public class VideoServiceImpl implements VideoService {
         videosMapper.updateByPrimaryKeySelective(videos);
     }
 
+    @Transactional(propagation = Propagation.REQUIRED)
     @Override
-    public PagedResult getAllVideos(Integer page, Integer pageSize) {
+    public PagedResult getAllVideos(Videos videos, Integer isSaveRecord, Integer page, Integer pageSize) {
+
+        // 保存热搜词
+        String desc = videos.getVideoDesc();
+        if (isSaveRecord != null && isSaveRecord == 1) {
+            SearchRecords searchRecords = new SearchRecords();
+            searchRecords.setId(sid.nextShort());
+            searchRecords.setContent(desc);
+            searchRecordsMapper.insert(searchRecords);
+        }
+
         PageHelper.startPage(page, pageSize);
-        List<VideosVO> list = videosMapperCustom.queryAllVideos();
+        List<VideosVO> list = videosMapperCustom.queryAllVideos(desc);
 
         PageInfo<VideosVO> pageList = new PageInfo<>(list);
         PagedResult pagedResult = new PagedResult();
@@ -62,5 +78,11 @@ public class VideoServiceImpl implements VideoService {
         pagedResult.setRecords(pageList.getTotal());
 
         return pagedResult;
+    }
+
+    @Transactional(propagation = Propagation.SUPPORTS)
+    @Override
+    public List<String> getHotWords() {
+        return searchRecordsMapper.getHotwords();
     }
 }

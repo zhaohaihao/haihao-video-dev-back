@@ -26,7 +26,9 @@
 		left join users u on u.id = v.user_id
 		where
 		1 = 1
-
+		<if test=" videoDesc != null and videoDesc != '' ">
+		  and v.video_desc like CONCAT('%', #{videoDesc} ,'%')
+		</if>
 		and v.status = 1
 		order by v.create_time desc
 	</select>

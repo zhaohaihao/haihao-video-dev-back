@@ -3,6 +3,8 @@ package com.haihao.video.service;
 import com.haihao.video.pojo.Videos;
 import com.haihao.video.utils.PagedResult;
 
+import java.util.List;
+
 /**
  * Created by zhh on 2018/7/11 0011.
  */
@@ -28,5 +30,7 @@ public interface VideoService {
      * @param pageSize
      * @return
      */
-    PagedResult getAllVideos(Integer page, Integer pageSize);
+    PagedResult getAllVideos(Videos videos, Integer isSaveRecord, Integer page, Integer pageSize);
+
+    List<String> getHotWords();
 }
