@@ -32,5 +32,25 @@ public interface VideoService {
      */
     PagedResult getAllVideos(Videos videos, Integer isSaveRecord, Integer page, Integer pageSize);
 
+    /**
+     * 获取热搜词列表
+     * @return
+     */
     List<String> getHotWords();
+
+    /**
+     * 用户喜欢/点赞视频
+     * @param userId
+     * @param videoId
+     * @param videoCreaterId
+     */
+    void userLikeVideo(String userId, String videoId, String videoCreaterId);
+
+    /**
+     * 用户不喜欢/取消点赞视频
+     * @param userId
+     * @param videoId
+     * @param videoCreaterId
+     */
+    void userUnLikeVideo(String userId, String videoId, String videoCreaterId);
 }
